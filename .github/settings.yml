@@ -1,0 +1,9 @@
+_extends: .github
+repository:
+  name: remark-readme
+  description: >-
+    remark plugin for transforming the README for projects that follow form8ion
+    conventions
+  homepage: https://npm.im/@form8ion/remark-readme
+  private: false
+  topics: remark-plugin
