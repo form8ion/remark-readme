@@ -36,8 +36,42 @@ $ npm install @form8ion/remark-readme --save
 
 ### Example
 
+#### Import
+
 ```javascript
-import remarkReadme from '@form8ion/remark-readme';
+import fs from 'fs';
+import remark from 'remark';
+import updateReadme from '@form8ion/remark-readme';
+```
+
+#### Execute
+
+```javascript
+remark()
+  .use(
+    updateReadme,
+    {
+      usage: 'information about using the project'
+    }
+  )
+  .process(
+    `# project-name
+
+Description of the project
+
+<!--status-badges start -->
+<!--status-badges end -->
+
+<!--consumer-badges start -->
+<!--consumer-badges end -->
+
+<!--contribution-badges start -->
+<!--contribution-badges end -->
+`,
+    (err, file) => {
+      fs.writeFileSync(`${process.cwd()}/README.md`, file.contents);
+    }
+  );
 ```
 
 ## Contributing
