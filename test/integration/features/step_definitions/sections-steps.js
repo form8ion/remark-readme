@@ -28,6 +28,12 @@ Then('there is a {string} heading', async function (sectionName) {
   assert.equal(htmlElements[0].value, '<!--consumer-badges start -->');
 });
 
+Then('there is no {string} heading', async function (sectionName) {
+  const readmeTree = remark().parse(this.resultingContent);
+
+  assert.isUndefined(find(readmeTree, {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]}));
+});
+
 Then('the {string} content is populated', async function (sectionName) {
   const readmeTree = remark().parse(this.resultingContent);
 

@@ -1,6 +1,6 @@
 import modifyChildren from 'unist-util-modify-children';
 
-export default function () {
+export default function ({usage}) {
   const modify = modifyChildren((node, index, parent) => {
     if ('html' === node.type && '<!--consumer-badges start -->' === node.value) {
       parent.children.splice(
@@ -20,6 +20,8 @@ export default function () {
   });
 
   return function transformer(node) {
-    modify(node);
+    if (usage) {
+      modify(node);
+    }
   };
 }
