@@ -70,6 +70,7 @@
     "gherkin-lint": "^4.2.2",
     "husky": "6.0.0",
     "lockfile-lint": "4.6.2",
+    "mdast-util-heading-range": "2.1.5",
     "mocha": "^9.0.1",
     "mock-fs": "5.0.0",
     "npm-run-all": "4.1.5",
@@ -82,6 +83,11 @@
     "rimraf": "3.0.2",
     "rollup": "^2.52.1",
     "rollup-plugin-auto-external": "2.0.0",
-    "sinon": "^11.1.1"
+    "sinon": "^11.1.1",
+    "unist-util-find": "1.0.2",
+    "unist-util-find-all-between": "^2.1.0"
+  },
+  "dependencies": {
+    "unist-util-modify-children": "^2.0.0"
   }
 }
