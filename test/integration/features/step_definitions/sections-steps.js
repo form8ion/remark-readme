@@ -1,4 +1,4 @@
-import remark from 'remark';
+import parse from 'mdast-util-from-markdown';
 import find from 'unist-util-find';
 import findAllAfter from 'unist-util-find-all-after';
 import findBetween from 'unist-util-find-all-between';
@@ -19,15 +19,12 @@ Given('content is provided for the {string} section', async function (sectionNam
 });
 
 Then('there is a {string} heading', async function (sectionName) {
-  const readmeTree = remark().parse(this.resultingContent);
+  const readmeTree = parse(this.resultingContent);
 
   const matchingSectionHeadings = findAllAfter(readmeTree, 1, {type: 'heading', depth: 2})
     .filter(sectionHeading => sectionName === sectionHeading.children[0].value);
 
-  assert.equal(
-    matchingSectionHeadings.length,
-    1
-  );
+  assert.equal(matchingSectionHeadings.length, 1);
 
   const htmlElements = findBetween(
     readmeTree,
@@ -40,13 +37,13 @@ Then('there is a {string} heading', async function (sectionName) {
 });
 
 Then('there is no {string} heading', async function (sectionName) {
-  const readmeTree = remark().parse(this.resultingContent);
+  const readmeTree = parse(this.resultingContent);
 
   assert.isUndefined(find(readmeTree, {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]}));
 });
 
 Then('the {string} content is populated', async function (sectionName) {
-  const readmeTree = remark().parse(this.resultingContent);
+  const readmeTree = parse(this.resultingContent);
 
   const paragraphs = findBetween(
     readmeTree,

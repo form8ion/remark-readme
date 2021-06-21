@@ -88,7 +88,7 @@
     "unist-util-find-all-between": "^2.1.0"
   },
   "dependencies": {
-    "remark": "^13.0.0",
+    "mdast-util-from-markdown": "^0.8.5",
     "unist-util-modify-children": "^2.0.0"
   }
 }

@@ -1,33 +1,11 @@
 import modifyChildren from 'unist-util-modify-children';
-import remark from 'remark';
+import getSectionInjector from './section-injector';
 
-export default function ({usage}) {
-  const modify = modifyChildren((node, index, parent) => {
-    if ('html' === node.type && '<!--consumer-badges start -->' === node.value) {
-      parent.children.splice(
-        index,
-        0,
-        {
-          type: 'heading',
-          depth: 2,
-          children: [{type: 'text', value: 'Usage'}]
-        }
-      );
-
-      return index + 2;
-    }
-
-    if ('html' === node.type && '<!--contribution-badges start -->' === node.value) {
-      parent.children.splice(index, 0, remark.parse(usage));
-
-      return index + 2;
-    }
-
-    return undefined;
-  });
+export default function (documentation) {
+  const modify = modifyChildren(getSectionInjector(documentation));
 
   return function transformer(node) {
-    if (usage) {
+    if (documentation.usage) {
       modify(node);
     }
   };
