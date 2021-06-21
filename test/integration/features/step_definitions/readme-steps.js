@@ -17,7 +17,7 @@ ${this.projectDescription}
 1. item 1
 1. item 2
 
-<!--consumer-badges start -->
+${this['usage-heading'] ? `## ${this['usage-heading']}\n\n` : ''}<!--consumer-badges start -->
 <!--consumer-badges end -->
 
 <!--contribution-badges start -->

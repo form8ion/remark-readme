@@ -1,5 +1,6 @@
 import remark from 'remark';
 import find from 'unist-util-find';
+import findAllAfter from 'unist-util-find-all-after';
 import findBetween from 'unist-util-find-all-between';
 import {Given, Then} from '@cucumber/cucumber';
 import any from '@travi/any';
@@ -9,6 +10,10 @@ Given('the existing README has no {string} heading', async function (sectionName
   this[`${sectionName.toLowerCase()}-heading`] = null;
 });
 
+Given('the existing README has an existing {string} section', async function (sectionName) {
+  this[`${sectionName.toLowerCase()}-heading`] = sectionName;
+});
+
 Given('content is provided for the {string} section', async function (sectionName) {
   this[sectionName.toLowerCase()] = any.sentence();
 });
@@ -16,8 +21,11 @@ Given('content is provided for the {string} section', async function (sectionNam
 Then('there is a {string} heading', async function (sectionName) {
   const readmeTree = remark().parse(this.resultingContent);
 
+  const matchingSectionHeadings = findAllAfter(readmeTree, 1, {type: 'heading', depth: 2})
+    .filter(sectionHeading => sectionName === sectionHeading.children[0].value);
+
   assert.equal(
-    find(readmeTree, {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]}).children.length,
+    matchingSectionHeadings.length,
     1
   );
 
