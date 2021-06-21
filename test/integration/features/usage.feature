@@ -1,6 +1,5 @@
 Feature: Usage
 
-  @wip
   Scenario: Initial Usage Definition
     Given the existing README has no "Usage" heading
     And the existing README uses modern badge zones

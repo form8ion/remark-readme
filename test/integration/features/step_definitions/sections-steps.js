@@ -16,7 +16,10 @@ Given('content is provided for the {string} section', async function (sectionNam
 Then('there is a {string} heading', async function (sectionName) {
   const readmeTree = remark().parse(this.resultingContent);
 
-  assert.equal(find(readmeTree, {type: 'heading', depth: 2}).children[0].value, sectionName);
+  assert.equal(
+    find(readmeTree, {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]}).children.length,
+    1
+  );
 
   const htmlElements = findBetween(
     readmeTree,
@@ -44,5 +47,5 @@ Then('the {string} content is populated', async function (sectionName) {
     'paragraph'
   );
 
-  assert.deepInclude(paragraphs, {value: this[sectionName.toLowerCase()]});
+  assert.equal(paragraphs[0].children[0].value, this[sectionName.toLowerCase()]);
 });
