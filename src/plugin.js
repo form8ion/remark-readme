@@ -1,4 +1,4 @@
-import modifyChildren from 'unist-util-modify-children';
+import modifyChildren from '../thirdparty-wrappers/unist-util-modify-children';
 import getSectionInjector from './section-injector';
 
 export default function (documentation) {
