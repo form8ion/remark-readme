@@ -1,6 +1,6 @@
 import parse from '../thirdparty-wrappers/mdast-util-from-markdown';
 
-export default function ({usage, toc}) {
+export default function ({toc, usage, contributing}) {
   return (node, index, parent) => {
     const {type, value} = node;
 
@@ -23,13 +23,27 @@ export default function ({usage, toc}) {
         return index + 2;
       }
 
-      if (usage && '<!--contribution-badges start -->' === value) {
-        parent.children.splice(index, 0, parse(usage));
+      if ('<!--contribution-badges start -->' === value) {
+        let incrementCount = 0;
 
-        return index + 2;
+        if (contributing) {
+          parent.children.splice(
+            index,
+            0,
+            {type: 'heading', depth: 2, children: [{type: 'text', value: 'Contributing'}]}
+          );
+
+          incrementCount += 2;
+        }
+
+        if (usage) {
+          parent.children.splice(index, 0, parse(usage));
+
+          incrementCount += 2;
+        }
+
+        if (incrementCount) return index + incrementCount;
       }
-
-      return undefined;
     }
 
     return undefined;

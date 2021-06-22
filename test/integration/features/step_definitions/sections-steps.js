@@ -26,14 +26,25 @@ Then('there is a {string} heading', async function (sectionName) {
 
   assert.equal(matchingSectionHeadings.length, 1);
 
-  const htmlElements = findBetween(
-    readmeTree,
-    {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
-    {type: 'html', value: '<!--contribution-badges start -->'},
-    'html'
-  );
+  if ('Usage' === sectionName) {
+    const htmlElements = findBetween(
+      readmeTree,
+      {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
+      {type: 'html', value: '<!--contribution-badges start -->'},
+      'html'
+    );
 
-  assert.equal(htmlElements[0].value, '<!--consumer-badges start -->');
+    assert.equal(htmlElements[0].value, '<!--consumer-badges start -->');
+  } else if ('Contributing' === sectionName) {
+    const htmlElements = findBetween(
+      readmeTree,
+      {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
+      {type: 'html', value: '<!--contribution-badges end -->'},
+      'html'
+    );
+
+    assert.equal(htmlElements[0].value, '<!--contribution-badges start -->');
+  }
 });
 
 Then('there is no {string} heading', async function (sectionName) {
@@ -42,15 +53,28 @@ Then('there is no {string} heading', async function (sectionName) {
   assert.isUndefined(find(readmeTree, {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]}));
 });
 
+function decideEndMarker(sectionName) {
+  if ('Usage' === sectionName && this.contributing) {
+    return {type: 'heading', depth: 2, children: [{type: 'text', value: 'Contributing'}]};
+  }
+
+  if ('Table of Contents' === sectionName && this.usage) {
+    return {type: 'heading', depth: 2, children: [{type: 'text', value: 'Usage'}]};
+  }
+
+  return {
+    type: 'html',
+    value: `<!--${'Usage' === sectionName ? 'contribution' : 'consumer'}-badges start -->`
+  };
+}
+
 Then('the {string} content is populated', async function (sectionName) {
   const readmeTree = parse(this.resultingContent);
 
   const paragraphs = findBetween(
     readmeTree,
     {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
-    'Table of Contents' === sectionName && this.usage
-      ? {type: 'heading', depth: 2, children: [{type: 'text', value: 'Usage'}]}
-      : {type: 'html', value: `<!--${'Usage' === sectionName ? 'contribution' : 'consumer'}-badges start -->`},
+    decideEndMarker.call(this, sectionName),
     'paragraph'
   );
 
