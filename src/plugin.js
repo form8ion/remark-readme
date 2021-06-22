@@ -5,7 +5,7 @@ export default function (documentation) {
   const modify = modifyChildren(getSectionInjector(documentation));
 
   return function transformer(node) {
-    if (documentation.usage) {
+    if (documentation.usage || documentation.toc) {
       modify(node);
     }
   };

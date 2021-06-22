@@ -28,7 +28,7 @@ Then('there is a {string} heading', async function (sectionName) {
 
   const htmlElements = findBetween(
     readmeTree,
-    {type: 'heading', depth: 2, children: [{type: 'text', value: 'Usage'}]},
+    {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
     {type: 'html', value: '<!--contribution-badges start -->'},
     'html'
   );
@@ -47,8 +47,10 @@ Then('the {string} content is populated', async function (sectionName) {
 
   const paragraphs = findBetween(
     readmeTree,
-    {type: 'heading', depth: 2, children: [{type: 'text', value: 'Usage'}]},
-    {type: 'html', value: '<!--contribution-badges start -->'},
+    {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
+    'Table of Contents' === sectionName && this.usage
+      ? {type: 'heading', depth: 2, children: [{type: 'text', value: 'Usage'}]}
+      : {type: 'html', value: `<!--${'Usage' === sectionName ? 'contribution' : 'consumer'}-badges start -->`},
     'paragraph'
   );
 

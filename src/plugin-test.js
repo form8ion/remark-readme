@@ -31,7 +31,18 @@ suite('plugin', () => {
     assert.calledWith(modifier, node);
   });
 
-  test('that the document is not updated when no usage content is provided', () => {
+  test('that the "Table of Contents" section header is injected when not present', () => {
+    const documentation = {toc: any.sentence()};
+    const modifier = sinon.spy();
+    sectionInjector.default.withArgs(documentation).returns(injector);
+    childrenModifier.default.withArgs(injector).returns(modifier);
+
+    plugin(documentation)(node);
+
+    assert.calledWith(modifier, node);
+  });
+
+  test('that the document is not updated when no usage or toc content is provided', () => {
     const documentation = {};
     const modifier = sinon.spy();
     sectionInjector.default.withArgs(documentation).returns(injector);
