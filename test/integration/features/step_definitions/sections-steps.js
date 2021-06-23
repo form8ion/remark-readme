@@ -6,16 +6,16 @@ import {Given, Then} from '@cucumber/cucumber';
 import any from '@travi/any';
 import {assert} from 'chai';
 
-function decideEndMarker(sectionName) {
-  if ('Table of Contents' === sectionName && this.usage) {
+function decideEndMarker(sectionName, usage, contributing) {
+  if ('Table of Contents' === sectionName && usage) {
     return {type: 'heading', depth: 2, children: [{type: 'text', value: 'Usage'}]};
   }
 
-  if ('Usage' === sectionName && this.contributing) {
+  if ('Usage' === sectionName && contributing) {
     return {type: 'heading', depth: 2, children: [{type: 'text', value: 'Contributing'}]};
   }
 
-  if ('Contributing' === sectionName && this.contributing) {
+  if ('Contributing' === sectionName && contributing) {
     return {type: 'definition'};
   }
 
@@ -23,6 +23,22 @@ function decideEndMarker(sectionName) {
     type: 'html',
     value: `<!--${'Usage' === sectionName ? 'contribution' : 'consumer'}-badges start -->`
   };
+}
+
+function findAllInSection(readmeTree, sectionName, test, usage, contributing) {
+  return findBetween(
+    readmeTree,
+    {
+      type: 'heading',
+      depth: 2,
+      children: [{
+        type: 'text',
+        value: sectionName
+      }]
+    },
+    decideEndMarker(sectionName, usage, contributing),
+    test
+  );
 }
 
 Given('the existing README has no {string} heading', async function (sectionName) {
@@ -45,23 +61,11 @@ Then('there is a {string} heading', async function (sectionName) {
 
   assert.equal(matchingSectionHeadings.length, 1);
 
-  if ('Usage' === sectionName) {
-    const htmlElements = findBetween(
-      readmeTree,
-      {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
-      {type: 'html', value: '<!--contribution-badges start -->'},
-      'html'
-    );
+  const htmlElements = findAllInSection(readmeTree, sectionName, 'html', this.usage, this.contributing);
 
+  if ('Usage' === sectionName) {
     assert.equal(htmlElements[0].value, '<!--consumer-badges start -->');
   } else if ('Contributing' === sectionName) {
-    const htmlElements = findBetween(
-      readmeTree,
-      {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
-      {type: 'definition'},
-      'html'
-    );
-
     assert.equal(htmlElements[0].value, '<!--contribution-badges start -->');
   }
 });
@@ -75,12 +79,7 @@ Then('there is no {string} heading', async function (sectionName) {
 Then('the {string} content is populated', async function (sectionName) {
   const readmeTree = parse(this.resultingContent);
 
-  const paragraphs = findBetween(
-    readmeTree,
-    {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
-    decideEndMarker.call(this, sectionName),
-    'paragraph'
-  );
+  const paragraphs = findAllInSection(readmeTree, sectionName, 'paragraph', this.usage, this.contributing);
 
   assert.equal(paragraphs[0].children[0].value, this[sectionName.toLowerCase()]);
 });
