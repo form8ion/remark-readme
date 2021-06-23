@@ -6,6 +6,25 @@ import {Given, Then} from '@cucumber/cucumber';
 import any from '@travi/any';
 import {assert} from 'chai';
 
+function decideEndMarker(sectionName) {
+  if ('Table of Contents' === sectionName && this.usage) {
+    return {type: 'heading', depth: 2, children: [{type: 'text', value: 'Usage'}]};
+  }
+
+  if ('Usage' === sectionName && this.contributing) {
+    return {type: 'heading', depth: 2, children: [{type: 'text', value: 'Contributing'}]};
+  }
+
+  if ('Contributing' === sectionName && this.contributing) {
+    return {type: 'definition'};
+  }
+
+  return {
+    type: 'html',
+    value: `<!--${'Usage' === sectionName ? 'contribution' : 'consumer'}-badges start -->`
+  };
+}
+
 Given('the existing README has no {string} heading', async function (sectionName) {
   this[`${sectionName.toLowerCase()}-heading`] = null;
 });
@@ -39,7 +58,7 @@ Then('there is a {string} heading', async function (sectionName) {
     const htmlElements = findBetween(
       readmeTree,
       {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]},
-      {type: 'html', value: '<!--contribution-badges end -->'},
+      {type: 'definition'},
       'html'
     );
 
@@ -52,21 +71,6 @@ Then('there is no {string} heading', async function (sectionName) {
 
   assert.isUndefined(find(readmeTree, {type: 'heading', depth: 2, children: [{type: 'text', value: sectionName}]}));
 });
-
-function decideEndMarker(sectionName) {
-  if ('Usage' === sectionName && this.contributing) {
-    return {type: 'heading', depth: 2, children: [{type: 'text', value: 'Contributing'}]};
-  }
-
-  if ('Table of Contents' === sectionName && this.usage) {
-    return {type: 'heading', depth: 2, children: [{type: 'text', value: 'Usage'}]};
-  }
-
-  return {
-    type: 'html',
-    value: `<!--${'Usage' === sectionName ? 'contribution' : 'consumer'}-badges start -->`
-  };
-}
 
 Then('the {string} content is populated', async function (sectionName) {
   const readmeTree = parse(this.resultingContent);

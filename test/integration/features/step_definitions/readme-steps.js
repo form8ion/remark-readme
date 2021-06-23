@@ -3,7 +3,9 @@ import any from '@travi/any';
 
 Before(function () {
   this.projectDescription = any.sentence();
-  this.badgeDefinitions = [];
+  this.badgeDefinitions = [`[${any.word}]: ${any.url()}
+
+[${any.word()}]: ${any.url()}`];
 });
 
 Given('the existing README uses modern badge zones', async function () {
