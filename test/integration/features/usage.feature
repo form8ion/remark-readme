@@ -14,7 +14,6 @@ Feature: Usage
     When a node is processed
     Then there is no "Usage" heading
 
-  @wip
   Scenario: Usage Definition Addition
     Given the existing README has an existing "Usage" section
     And the existing README uses modern badge zones

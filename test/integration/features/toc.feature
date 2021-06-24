@@ -29,4 +29,4 @@ Feature: Table of Contents
     And content is provided for the "Table of Contents" section
     When a node is processed
     Then there is a "Table of Contents" heading
-    And the "Table of Contents" content is populated
+    And the "Table of Contents" content is unchanged

@@ -47,6 +47,7 @@ Given('the existing README has no {string} heading', async function (sectionName
 
 Given('the existing README has an existing {string} section', async function (sectionName) {
   this[`${sectionName.toLowerCase()}-heading`] = sectionName;
+  this[`${sectionName.toLowerCase()}-existing-content`] = any.sentence();
 });
 
 Given('content is provided for the {string} section', async function (sectionName) {
@@ -82,4 +83,12 @@ Then('the {string} content is populated', async function (sectionName) {
   const paragraphs = findAllInSection(readmeTree, sectionName, 'paragraph', this.usage, this.contributing);
 
   assert.equal(paragraphs[0].children[0].value, this[sectionName.toLowerCase()]);
+});
+
+Then('the {string} content is unchanged', async function (sectionName) {
+  const readmeTree = parse(this.resultingContent);
+
+  const paragraphs = findAllInSection(readmeTree, sectionName, 'paragraph', this.usage, this.contributing);
+
+  assert.equal(paragraphs[0].children[0].value, this[`${sectionName.toLowerCase()}-existing-content`]);
 });

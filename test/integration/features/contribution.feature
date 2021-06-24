@@ -33,3 +33,11 @@ Feature: Contribution
     When a node is processed
     Then there is a "Contributing" heading
     And the "Contributing" content is populated
+
+  Scenario: Contributing Definition Addition
+    Given the existing README has an existing "Contributing" section
+    And the existing README uses modern badge zones
+    And content is provided for the "Contributing" section
+    When a node is processed
+    Then there is a "Contributing" heading
+    And the "Contributing" content is populated

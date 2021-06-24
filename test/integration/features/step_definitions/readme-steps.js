@@ -16,13 +16,13 @@ ${this.projectDescription}
 <!--status-badges start -->
 <!--status-badges end -->
 
-1. item 1
-1. item 2
-
+${this['table of contents-heading']
+    ? `## ${this['table of contents-heading']}\n\n${this['table of contents-existing-content']}\n\n`
+    : ''}
 ${this['usage-heading'] ? `## ${this['usage-heading']}\n\n` : ''}<!--consumer-badges start -->
 <!--consumer-badges end -->
 
-<!--contribution-badges start -->
+${this['contributing-heading'] ? `## ${this['contributing-heading']}\n\n` : ''}<!--contribution-badges start -->
 <!--contribution-badges end -->
 
 ${this.badgeDefinitions.join('\n\n')}`;
