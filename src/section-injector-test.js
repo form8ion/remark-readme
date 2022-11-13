@@ -6,7 +6,7 @@ import getSectionInjector from './section-injector';
 
 suite('section injector', () => {
   let sandbox;
-  const index = any.integer({max: 20});
+  const index = any.integer({min: 5, max: 20});
   const toc = any.simpleObject();
   const usage = any.simpleObject();
   const contributing = any.simpleObject();
