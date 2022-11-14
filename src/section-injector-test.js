@@ -20,7 +20,7 @@ suite('section injector', () => {
   teardown(() => sandbox.restore());
 
   test('that the "Table of Contents" heading and content are added after the status badge zone', () => {
-    const childrenOfParent = any.listOf(any.simpleObject, {min: index, max: index + 20});
+    const childrenOfParent = any.listOf(any.simpleObject, {min: index + 2, max: index + 20});
     const node = {type: 'html', value: '<!--status-badges end -->'};
     const tocContentTree = any.simpleObject();
     const injectSections = getSectionInjector({toc});
