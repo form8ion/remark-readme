@@ -83,7 +83,7 @@
     "rimraf": "3.0.2",
     "rollup": "3.3.0",
     "rollup-plugin-auto-external": "2.0.0",
-    "sinon": "14.0.1",
+    "sinon": "14.0.2",
     "unist-util-find": "1.0.2",
     "unist-util-find-all-after": "3.0.2",
     "unist-util-find-all-between": "2.1.0"
