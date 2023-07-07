@@ -52,7 +52,7 @@
   "dependencies": {
     "mdast-util-from-markdown": "^0.8.5",
     "mdast-util-heading-range": "^2.1.5",
-    "unist-util-modify-children": "^2.0.0"
+    "unist-util-modify-children": "^3.0.0"
   },
   "devDependencies": {
     "@babel/register": "7.22.5",
