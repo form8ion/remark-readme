@@ -3,7 +3,7 @@
 import stubbedFs from 'mock-fs';
 import fs from 'fs';
 import remark from 'remark';
-import updateReadme from './lib/index.cjs';
+import updateReadme from './lib/index';
 
 // remark-usage-ignore-next
 stubbedFs();
