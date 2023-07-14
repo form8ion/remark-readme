@@ -48,7 +48,8 @@
     "lib/"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "dependencies": {
     "mdast-util-from-markdown": "^0.8.5",
