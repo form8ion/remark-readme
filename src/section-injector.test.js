@@ -1,10 +1,10 @@
-import parse from 'mdast-util-from-markdown';
+import {fromMarkdown as parse} from 'mdast-util-from-markdown';
 
 import {afterEach, describe, it, vi, expect} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import getSectionInjector from './section-injector';
+import getSectionInjector from './section-injector.js';
 
 vi.mock('mdast-util-from-markdown');
 

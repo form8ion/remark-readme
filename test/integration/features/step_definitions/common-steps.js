@@ -1,5 +1,5 @@
 import {When} from '@cucumber/cucumber';
-import remark from 'remark';
+import {remark} from 'remark';
 // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
 import remarkReadme from '@form8ion/remark-readme';
 
@@ -8,11 +8,9 @@ When('a node is processed', async function () {
   const usageContents = this.usage;
   const contributingContents = this.contributing;
 
-  remark()
+  const file = await remark()
     .use(remarkReadme, {usage: usageContents, toc: tocContents, contributing: contributingContents})
-    .process(this.existingReadmeContent, (err, file) => {
-      if (err) throw err;
+    .process(this.existingReadmeContent);
 
-      this.resultingContent = file.contents;
-    });
+  this.resultingContent = `${file}`;
 });
