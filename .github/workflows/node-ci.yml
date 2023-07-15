@@ -31,7 +31,6 @@ jobs:
           cache: npm
           node-version: ${{ matrix.node }}
       - run: npm clean-install
-      - run: npm audit signatures
       - run: npm test
   verify:
     runs-on: ubuntu-latest
@@ -43,6 +42,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm clean-install
+      - run: npm audit signatures
       - run: npm test
       - uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
   release:
