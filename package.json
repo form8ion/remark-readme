@@ -53,7 +53,7 @@
     "provenance": true
   },
   "dependencies": {
-    "mdast-util-from-markdown": "^0.8.5",
+    "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-heading-range": "^2.1.5",
     "unist-util-modify-children": "^2.0.0"
   },
