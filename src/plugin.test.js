@@ -1,13 +1,13 @@
-import childrenModifier from 'unist-util-modify-children';
-import headingRange from 'mdast-util-heading-range';
+import {modifyChildren} from 'unist-util-modify-children';
+import {headingRange} from 'mdast-util-heading-range';
 
 import any from '@travi/any';
 import {afterEach, beforeEach, vi, describe, it, expect} from 'vitest';
 import {when} from 'jest-when';
 
-import sectionInjector from './section-injector';
-import sectionContentInjector from './section-content-injector';
-import plugin from './plugin';
+import sectionInjector from './section-injector.js';
+import sectionContentInjector from './section-content-injector.js';
+import plugin from './plugin.js';
 
 vi.mock('unist-util-modify-children');
 vi.mock('mdast-util-heading-range');
@@ -30,7 +30,7 @@ describe('plugin', () => {
     const documentation = {usage: any.sentence()};
     const modifier = vi.fn();
     when(sectionInjector).calledWith(documentation).mockReturnValue(injector);
-    when(childrenModifier).calledWith(injector).mockReturnValue(modifier);
+    when(modifyChildren).calledWith(injector).mockReturnValue(modifier);
 
     plugin(documentation)(node);
 
@@ -42,7 +42,7 @@ describe('plugin', () => {
     const documentation = {toc: any.sentence()};
     const modifier = vi.fn();
     when(sectionInjector).calledWith(documentation).mockReturnValue(injector);
-    when(childrenModifier).calledWith(injector).mockReturnValue(modifier);
+    when(modifyChildren).calledWith(injector).mockReturnValue(modifier);
 
     plugin(documentation)(node);
 
@@ -57,7 +57,7 @@ describe('plugin', () => {
     const contentInjector = vi.fn();
     when(sectionInjector).calledWith(documentation).mockReturnValue(injector);
     when(sectionContentInjector).calledWith(contributingContent).mockReturnValue(contentInjector);
-    when(childrenModifier).calledWith(injector).mockReturnValue(modifier);
+    when(modifyChildren).calledWith(injector).mockReturnValue(modifier);
 
     plugin(documentation)(node);
 
@@ -73,7 +73,7 @@ describe('plugin', () => {
     const documentation = {};
     const modifier = vi.fn();
     when(sectionInjector).calledWith(documentation).mockReturnValue(injector);
-    when(childrenModifier).calledWith(injector).mockReturnValue(modifier);
+    when(modifyChildren).calledWith(injector).mockReturnValue(modifier);
 
     plugin(documentation)(node);
 

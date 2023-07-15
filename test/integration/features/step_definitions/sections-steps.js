@@ -1,6 +1,6 @@
-import parse from 'mdast-util-from-markdown';
-import find from 'unist-util-find';
-import findAllAfter from 'unist-util-find-all-after';
+import {fromMarkdown as parse} from 'mdast-util-from-markdown';
+import {find} from 'unist-util-find';
+import {findAllAfter} from 'unist-util-find-all-after';
 import findBetween from 'unist-util-find-all-between';
 import {Given, Then} from '@cucumber/cucumber';
 import any from '@travi/any';

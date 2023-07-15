@@ -1,8 +1,8 @@
-import headingRange from 'mdast-util-heading-range';
-import modifyChildren from 'unist-util-modify-children';
+import {headingRange} from 'mdast-util-heading-range';
+import {modifyChildren} from 'unist-util-modify-children';
 
-import getSectionInjector from './section-injector';
-import getSectionContentInjector from './section-content-injector';
+import getSectionInjector from './section-injector.js';
+import getSectionContentInjector from './section-content-injector.js';
 
 export default function (documentation) {
   const {toc, usage, contributing} = documentation;
