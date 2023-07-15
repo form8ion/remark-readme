@@ -1,5 +1,6 @@
-import headingRange from '../thirdparty-wrappers/mdast-util-heading-range';
-import modifyChildren from '../thirdparty-wrappers/unist-util-modify-children';
+import headingRange from 'mdast-util-heading-range';
+import modifyChildren from 'unist-util-modify-children';
+
 import getSectionInjector from './section-injector';
 import getSectionContentInjector from './section-content-injector';
 

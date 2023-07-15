@@ -1,4 +1,4 @@
-import parse from '../thirdparty-wrappers/mdast-util-from-markdown';
+import parse from 'mdast-util-from-markdown';
 
 const TOC_HEADING = 'Table of Contents';
 const USAGE_HEADING = 'Usage';
