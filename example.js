@@ -1,6 +1,7 @@
 // #### Import
-// remark-usage-ignore-next
+// remark-usage-ignore-next 2
 import stubbedFs from 'mock-fs';
+// eslint-disable-next-line import/order
 import {promises as fs} from 'node:fs';
 import {remark} from 'remark';
 import updateReadme from './lib/index.js';
